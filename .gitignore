@@ -55,7 +55,7 @@
 **/ios/**/xcuserdata
 **/ios/.generated/
 **/ios/Flutter/App.framework
-**/ios/Flutter/Runner/Info.plist
+**/ios/Runner/AppDelegate.m
 **/ios/Flutter/Flutter.framework
 **/ios/Flutter/Generated.xcconfig
 **/ios/Flutter/app.flx
