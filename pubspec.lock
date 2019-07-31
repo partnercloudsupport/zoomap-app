@@ -151,6 +151,7 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "2.0.3"
+<<<<<<< HEAD
   rflutter_alert:
     dependency: "direct main"
     description:
@@ -158,6 +159,8 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.0.3"
+=======
+>>>>>>> d2a5c1e8c4443f70fe962305868c929f26e90fdc
   sky_engine:
     dependency: transitive
     description: flutter
