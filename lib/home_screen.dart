@@ -1,8 +1,9 @@
-import 'dart:async';
-
 import 'package:flutter/material.dart';
 import 'package:zoomap/photos_listview.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'flickr_images.dart';
+import 'package:rflutter_alert/rflutter_alert.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 
 class MyHomePage extends StatefulWidget {
   @override
@@ -16,6 +17,9 @@ class _MyHomePageState extends State<MyHomePage> {
   double lat;
   double long;
   GoogleMapController mapController;
+  List<String> networkImages;
+  bool isMarked = false;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -24,10 +28,15 @@ class _MyHomePageState extends State<MyHomePage> {
         children: <Widget>[
           Expanded(
             child: Container(
-              color: Colors.blue,
+              color: Color(0xFF61234e),
               child: Center(
                 child: Text(
-                  'information',
+                  'Zoomap',
+                  style: TextStyle(
+                      fontSize: 25,
+                      color: Colors.white,
+                      fontFamily: 'Dosis',
+                      fontWeight: FontWeight.bold),
                 ),
               ),
             ),
@@ -37,36 +46,100 @@ class _MyHomePageState extends State<MyHomePage> {
             flex: 6,
           ),
           Expanded(
-            child: FlatButton(
+            child: RaisedButton(
               onPressed: () {
-                Navigator.pushNamed(context, PhotosScreen.id);
+                isMarked == true ? getImageUrlList() : null;
               },
-              color: Colors.teal,
-              child: Text('click here for show the pics'),
+              color: Color(0xFF61234e),
+              child: Text(
+                'Put a marker and tap here',
+                style: TextStyle(
+                    fontSize: 25, fontFamily: 'Roboto', color: Colors.white),
+              ),
             ),
-          )
+          ),
         ],
       ),
     );
   }
 
+  void getImageUrlList() async {
+    FlickrImages flickrImages = FlickrImages();
+
+    try {
+      networkImages =
+          await flickrImages.getImageList(latitude: lat, longitude: long);
+
+      if (networkImages[0] == 'noImagesFound') {
+        Alert(
+          context: context,
+          type: AlertType.info,
+          title: "No images found",
+          desc: "Try to mark another place",
+          buttons: [
+            DialogButton(
+              child: Text(
+                "ok",
+                style: TextStyle(color: Colors.white, fontSize: 20),
+              ),
+              onPressed: () => Navigator.pop(context),
+              width: 120,
+            )
+          ],
+        ).show();
+      } else {
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) {
+            return PhotosScreen(
+              images: networkImages,
+            );
+          }),
+        );
+      }
+    } catch (e) {
+      Alert(
+        context: context,
+        type: AlertType.error,
+        title: "Network Issues",
+        desc: "There's no internet connection",
+        buttons: [
+          DialogButton(
+            child: Text(
+              "ok",
+              style: TextStyle(color: Colors.white, fontSize: 20),
+            ),
+            onPressed: () => Navigator.pop(context),
+            width: 120,
+          )
+        ],
+      ).show();
+    }
+  }
+
   Widget _googleMap(BuildContext context) {
     return Container(
-        // height: MediaQuery.of(context).size.height,
-        // width: MediaQuery.of(context).size.width,
+        height: MediaQuery.of(context).size.height,
+        width: MediaQuery.of(context).size.width,
         child: GoogleMap(
-      onTap: (LatLng tapPosition) {
-        markers.remove(marker);
-        lat = (tapPosition.latitude);
-        long = (tapPosition.longitude);
-        _addMarker(latitude: lat, longitude: long);
-      },
-      initialCameraPosition:
-          CameraPosition(target: LatLng(40.0, -74.0), zoom: 12),
-      mapType: MapType.normal,
-      onMapCreated: _mapController,
-      markers: markers,
-    ));
+          onTap: (LatLng tapPosition) {
+            isMarked = true;
+            markers.remove(marker);
+            lat = (tapPosition.latitude);
+            long = (tapPosition.longitude);
+
+            print(lat);
+            print(long);
+            _addMarker(latitude: lat, longitude: long);
+          },
+          initialCameraPosition:
+              CameraPosition(target: LatLng(-0.92, 0.0), zoom: 2),
+          mapType: MapType.normal,
+          onMapCreated: _mapController,
+          markers: markers,
+          myLocationButtonEnabled: true,
+          myLocationEnabled: true,
+        ));
   }
 
   _mapController(GoogleMapController controller) {
@@ -79,7 +152,7 @@ class _MyHomePageState extends State<MyHomePage> {
     marker = Marker(
       position: LatLng(latitude, longitude),
       icon: BitmapDescriptor.defaultMarker,
-      markerId: MarkerId('xablau'),
+      markerId: MarkerId('marker'),
     );
     markers.add(marker);
     setState(() {});
