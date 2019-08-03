@@ -1,5 +1,6 @@
 import 'package:http/http.dart' as http;
 import 'dart:convert';
+import 'appkey.dart';
 
 class FlickrImages {
   List<String> imageList = [];
@@ -11,7 +12,7 @@ class FlickrImages {
   Future getImageList({double latitude, double longitude}) async {
     try {
       response = await http.get(
-          'https://www.flickr.com/services/rest/?method=flickr.photos.search&api_key=ab1b8b33a98bcf6636a412bb79eeebda&&privacy_filter=1&lat=$latitude&lon=$longitude&radius=1&radius_units=mi&per_page=20&page=1&format=json&nojsoncallback=1');
+          'https://www.flickr.com/services/rest/?method=flickr.photos.search&api_key=$appkey&privacy_filter=1&lat=$latitude&lon=$longitude&radius=1&radius_units=mi&per_page=20&page=1&format=json&nojsoncallback=1');
     } catch (e) {
       print('$e : sem net');
       return null;

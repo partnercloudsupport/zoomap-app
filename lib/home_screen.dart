@@ -3,7 +3,6 @@ import 'package:zoomap/photos_listview.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'flickr_images.dart';
 import 'package:rflutter_alert/rflutter_alert.dart';
-import 'package:flutter_spinkit/flutter_spinkit.dart';
 
 class MyHomePage extends StatefulWidget {
   @override
@@ -19,6 +18,7 @@ class _MyHomePageState extends State<MyHomePage> {
   GoogleMapController mapController;
   List<String> networkImages;
   bool isMarked = false;
+  bool isLoading = false;
 
   @override
   Widget build(BuildContext context) {
@@ -48,7 +48,11 @@ class _MyHomePageState extends State<MyHomePage> {
           Expanded(
             child: RaisedButton(
               onPressed: () {
-                isMarked == true ? getImageUrlList() : null;
+                if (isMarked == true && isLoading == false) {
+                  getImageUrlList();
+                } else {
+                  return null;
+                }
               },
               color: Color(0xFF61234e),
               child: Text(
@@ -65,7 +69,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
   void getImageUrlList() async {
     FlickrImages flickrImages = FlickrImages();
-
+    isLoading = true;
     try {
       networkImages =
           await flickrImages.getImageList(latitude: lat, longitude: long);
@@ -87,7 +91,9 @@ class _MyHomePageState extends State<MyHomePage> {
             )
           ],
         ).show();
+        isLoading = false;
       } else {
+        isLoading = false;
         Navigator.push(
           context,
           MaterialPageRoute(builder: (context) {
@@ -114,6 +120,7 @@ class _MyHomePageState extends State<MyHomePage> {
           )
         ],
       ).show();
+      isLoading = false;
     }
   }
 
