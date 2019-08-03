@@ -2,9 +2,11 @@
 
 A app that allow you to put a marker on the map and see images uploaded on Flickr bassed on the location.
 
-![Finished App](https://github.com/Fraukman/zoomap-app/screeshots/Screenshot_1.jpg)
-![Finished App](https://github.com/Fraukman/zoomap-app/screeshots/Screenshot_2.jpg)
-![Finished App](https://github.com/Fraukman/zoomap-app/screeshots/Screenshot_3.jpg)
+## Screenshots
+
+](https://github.com/Fraukman/zoomap-app/blob/master/screenshots/Screenshot_1.jpg)
+(https://github.com/Fraukman/zoomap-app/blob/master/screenshots/Screenshot_2.jpg)
+(https://github.com/Fraukman/zoomap-app/blob/master/screenshots/Screenshot_3.jpg)
 
 ## What i've learned with this project
 
