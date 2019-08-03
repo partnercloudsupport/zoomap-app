@@ -4,9 +4,9 @@ A app that allow you to put a marker on the map and see images uploaded on Flick
 
 ## Screenshots
 
-](https://github.com/Fraukman/zoomap-app/blob/master/screenshots/Screenshot_1.jpg)
-(https://github.com/Fraukman/zoomap-app/blob/master/screenshots/Screenshot_2.jpg)
-(https://github.com/Fraukman/zoomap-app/blob/master/screenshots/Screenshot_3.jpg)
+![alt text](https://github.com/Fraukman/zoomap-app/blob/master/screenshots/Screenshot_1.jpg)
+![alt text](https://github.com/Fraukman/zoomap-app/blob/master/screenshots/Screenshot_2.jpg)
+![alt text](https://github.com/Fraukman/zoomap-app/blob/master/screenshots/Screenshot_3.jpg)
 
 ## What i've learned with this project
 
